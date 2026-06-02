@@ -286,6 +286,6 @@ Benefits:
 
 Gulzhan Abdukalilova
 
-AWS | Terraform | Docker | Kubernetes | DevOps Engineering
+AWS | Terraform | Docker | ECS Fargate| DevOps Engineering
 
 
