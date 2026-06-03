@@ -1,4 +1,4 @@
-# AWS Enterprise E-Commerce Platform
+# Production E-Commerce Platform on AWS
 
 ## Project Overview
 
