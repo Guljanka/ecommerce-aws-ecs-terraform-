@@ -22,9 +22,9 @@ Services:
 - AWS Config
 
 Purpose:
-- Centralized governance
+- Governance and account management
 - Compliance monitoring
-- Account-level security controls
+- Security guardrails
 - Auditing and activity tracking
 
 ---
