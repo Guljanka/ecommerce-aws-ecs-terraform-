@@ -51,8 +51,6 @@ Purpose:
 ## 3. Security Layer
 
 Services:
-- AWS WAF
-- AWS Shield
 - IAM Roles
 - IAM Policies
 - Security Groups
