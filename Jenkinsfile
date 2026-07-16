@@ -1,11 +1,51 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "ecommerce-aws-ecs-terraform-"
+    }
+
     stages {
-        stage('Checkout Test') {
+
+        stage('Checkout') {
             steps {
-                echo 'GitHub and Jenkins connection is working!'
+                echo 'Checking out source code...'
+                checkout scm
             }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test || true'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t ${IMAGE_NAME}:latest .'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
