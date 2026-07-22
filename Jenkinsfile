@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "/opt/homebrew/bin:${env.PATH}"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,26 +8,36 @@ pipeline {
             }
         }
 
-        stage('Check Node') {
+        stage('Check Files') {
             steps {
-                sh 'echo $PATH'
-                sh 'which node'
-                sh 'which npm'
-                sh 'node -v'
-                sh 'npm -v'
+                sh '''
+                    pwd
+                    ls -la
+                    ls -la app
+                '''
             }
         }
 
-        stage('Install') {
+        stage('Build Docker Image') {
             steps {
-                sh 'npm install'
+                sh 'docker build -t ecommerce-app:latest ./app'
             }
         }
 
-        stage('Build') {
+        stage('Verify Docker Image') {
             steps {
-                sh 'npm run build'
+                sh 'docker images | grep ecommerce-app'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Pipeline failed. Check the console output.'
         }
     }
 }
