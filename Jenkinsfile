@@ -27,14 +27,6 @@ pipeline {
                     echo "PATH=$PATH"
 
                     echo ""
-                    echo "===== Node ====="
-                    node -v
-
-                    echo ""
-                    echo "===== NPM ====="
-                    npm -v
-
-                    echo ""
                     echo "===== Docker ====="
                     docker --version
 
@@ -49,18 +41,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Build Application') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -71,9 +51,9 @@ pipeline {
 
                         sh """
                         ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=restaurant-company \
-                        -Dsonar.projectName=restaurant-company \
-                        -Dsonar.sources=src \
+                        -Dsonar.projectKey=ecommerce-aws-ecs-terraform \
+                        -Dsonar.projectName=ecommerce-aws-ecs-terraform \
+                        -Dsonar.sources=app \
                         -Dsonar.sourceEncoding=UTF-8
                         """
 
