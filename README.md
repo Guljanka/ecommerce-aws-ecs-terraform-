@@ -6,6 +6,8 @@ This project demonstrates the design and deployment of a production-style AWS cl
 
 The goal of this project is to simulate a real-world enterprise cloud environment while applying DevOps, cloud architecture, automation, security, monitoring, and deployment best practices.
 
+> **Portfolio Note:** This environment was successfully deployed on AWS and later decommissioned to avoid ongoing cloud costs. The Terraform infrastructure and CI/CD configuration are preserved in this repository for demonstration.
+
 ---
 
 # Enterprise Cloud Architecture
@@ -56,7 +58,6 @@ Services:
 - Security Groups
 
 Purpose:
-- Protect web applications from Layer 7 attacks
 - Enforce least-privilege access
 - Protect infrastructure from unauthorized access
 - Improve security posture
@@ -84,14 +85,10 @@ Purpose:
 Services:
 - Amazon Aurora
 - Amazon ElastiCache (Redis)
-- Amazon DynamoDB
-- Amazon S3
 
 Purpose:
 - Relational database storage
 - Application caching
-- Terraform state locking
-- Remote Terraform state storage
 
 ---
 
@@ -99,15 +96,11 @@ Purpose:
 
 Services:
 - Amazon CloudWatch
-- CloudWatch Dashboards
-- CloudWatch Alarms
-- Amazon SNS
 - ECS Auto Scaling
 
 Purpose:
-- Monitor application health
-- Generate alerts
-- Visualize metrics
+- Monitor application health and infrastructure health
+- Centralize application logs
 - Automatically scale workloads based on demand
 
 ---
@@ -134,12 +127,6 @@ Purpose:
                      Users
                        │
                        ▼
-                    Route53
-                       │
-                       ▼
-                    AWS WAF
-                       │
-                       ▼
            Application Load Balancer
                        │
                        ▼
@@ -153,9 +140,7 @@ Purpose:
       Data
 
 Monitoring:
-CloudWatch Dashboard
-CloudWatch Alarms
-SNS Notifications
+Amazon CloudWatch
 ECS Auto Scaling
 
 CI/CD:
@@ -167,7 +152,6 @@ Amazon ECR
         ▼
 Amazon ECS
 ```
-
 ---
 
 # Infrastructure as Code
@@ -184,41 +168,24 @@ Key components managed by Terraform:
 - ECS Task Definitions
 - Aurora Database
 - Redis Cache
-- CloudWatch Resources
 - IAM Roles
 - Auto Scaling Policies
 
 ---
 
-# Remote Terraform Backend
-
-Terraform state is stored remotely using:
-
-- Amazon S3
-- Amazon DynamoDB State Locking
-
-Benefits:
-
-- State protection
-- Team collaboration
-- State consistency
-- Prevention of concurrent modifications
-
----
-
 # CI/CD Pipeline
 
-GitHub Actions automates deployments.
+GitHub Actions provides an automated CI/CD workflow for building, publishing, and deploying the application.
 
 Pipeline Flow:
 
-1. Developer pushes code to GitHub
-2. GitHub Actions starts workflow
+1. Developer updates the application code
+2. GitHub Actions workflow is triggered manually
 3. Docker image is built
 4. Image is pushed to Amazon ECR
-5. ECS service receives a new deployment
+5. ECS service is updated with the new task definition 
 6. New tasks are launched
-7. Application becomes available through ALB
+7. Application traffic is routed through the Application Load Balancer
 
 ---
 
@@ -250,11 +217,9 @@ Benefits:
 - Service Control Policies (SCP)
 - AWS Config
 - CloudTrail
-- AWS WAF
 - IAM Least Privilege
 - Security Groups
 - Private Subnets
-- Encrypted Terraform Backend
 
 ---
 
@@ -266,13 +231,11 @@ Benefits:
 - Amazon ECS Fargate
 - Amazon ECR
 - Application Load Balancer
-- Route53
 - Aurora
 - Redis
 - CloudWatch
 - Auto Scaling
 - AWS Organizations
-- AWS WAF
 - GitHub Actions
 - CI/CD
 - Infrastructure as Code
@@ -282,7 +245,7 @@ Benefits:
 
 # Author
 
-Gulzhan Abdukalilova
+Gulzhan Abdukalil kyzy
 
 AWS | Terraform | Docker | ECS Fargate| DevOps Engineering
 
